@@ -1,5 +1,5 @@
 // Initialize the slider
-var slider = document.getElementById('year');
+var slider = document.getElementById('slider');
 var yearValue = document.getElementById('year-value');
 
 // Handle slider events
@@ -14,6 +14,11 @@ function fillSlider(value) {
     var percent = (value - 1952) / (2022 - 1952) * 100;
     slider.style.background = 'linear-gradient(to right, #4CAF50 ' + percent + '%, #d3d3d3 ' + percent + '%';
 }
+
+// Color the box when clicked
+function toggleBox(element) {
+    element.classList.toggle('clicked');
+  }
 
 // Play a sound
 function playSound(value) {
@@ -41,7 +46,3 @@ function playSound(value) {
         sound.play();
     }
 }
-
-function toggleBox(element) {
-    element.classList.toggle('clicked');
-  }

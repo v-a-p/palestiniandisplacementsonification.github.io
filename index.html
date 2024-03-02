@@ -5,11 +5,13 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Displacement Data</h1>
-    <div id="slider">
-        <span id="year-value">1952</span>
-        <input type="range" min="1952" max="2022" value="1952" id="year">
-    </div>
+    <h1 id="title">Displacement Sonification </h1>
+
+    <!-- Slider -->
+    <input type="range" min="1952" max="2022" value="1952" id="slider">
+
+    <span id="year-value">1952</span>
+    <!-- The boxes -->
     <div class="container">
         <div class="box" onclick="toggleBox(this)">
             <a href="#">Internal Displacement</a>
@@ -24,6 +26,8 @@
             <a href="#">Displacement to Jordan</a>
         </div>
     </div>
+
+    <!-- Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.core.min.js"></script>
     <script src="script.js"></script>
 </body>
