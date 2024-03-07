@@ -17,32 +17,18 @@ function fillSlider(value) {
 
 // Color the box when clicked
 function toggleBox(element) {
-    element.classList.toggle('clicked');
+    const isClicked = element.classList.toggle('clicked');
+
+    // Create the oscillator if the element is clicked
+    if (isClicked) {
+        const oscillator = new Tone.Oscillator(440, "sine").toDestination();
+        oscillator.start();
+        element.oscillator = oscillator; // Store oscillator reference in element
+    } else {
+        // Stop the oscillator if the element is not clicked
+        if (element.oscillator) {
+            element.oscillator.stop();
+        }
+    }
+
   }
-
-// Play a sound
-function playSound(value) {
-    var sound;
-
-    if (document.getElementById('internal').checked) {
-        sound = new Howl({
-            src: ['internal_' + value + '.mp3']
-        });
-    } else if (document.getElementById('syria').checked) {
-        sound = new Howl({
-            src: ['syria_' + value + '.mp3']
-        });
-    } else if (document.getElementById('lebanon').checked) {
-        sound = new Howl({
-            src: ['lebanon_' + value + '.mp3']
-        });
-    } else if (document.getElementById('jordan').checked) {
-        sound = new Howl({
-            src: ['jordan_' + value + '.mp3']
-        });
-    }
-
-    if (sound) {
-        sound.play();
-    }
-}
