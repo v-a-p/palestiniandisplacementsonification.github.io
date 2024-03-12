@@ -1,63 +1,74 @@
-function playSound(element, isClicked, country) {
-    // Create the oscillator if the element is clicked
+async function playSound(element, isClicked, country) {
+    // Create the sound if the element is clicked
     if (isClicked) {
-        if (country == 'PSE') { element.fmSynth = playInternal(element); }
-        else if (country == 'SYR'){ element.newFMSynth = playSyria(element); }
-        else if (country == 'LBN'){ element.oscillator = playLebanon(element); }
+        if (country == 'PSE') { element.fmInternal = await playInternal(element); }
+        else if (country == 'SYR'){ element.fmSyria = await playSyria(element); }
+        else if (country == 'LBN'){ element.footsteps = playLebanon(element); }
         else { element.oscillator = playJordan(element); }
     } 
     else {
         // Stop the oscillator if the element is not clicked
         if (element.oscillator) element.oscillator.stop();
-        if (element.fmSynth) {
-            Tone.Transport.cancel();
-            Tone.Transport.stop();
+        if (element.fmInternal) {
+            fmInternal.dispose();
+            clearInterval(melodyInternal);
         }
-        if (element.newFMSynth) {
-            Tone.Transport.cancel();
-            Tone.Transport.stop();
+        if (element.fmSyria) {
+            fmSyria.dispose();
+            clearInterval(melodySyria);
         }
+        if (element.footsteps) element.footsteps.stop();
     }
 }
 
 async function playInternal(element) {
     let melody = ['C5', 'E5', 'G5', 'E5', 'C5', 'D5', 'E5', 'D5'];
     let duration = '8n';
-
-    fmSynth = new Tone.FMSynth().toDestination();
-    Tone.Transport.bpm.value = 120;
+    let bpm = 120;
+    fmInternal = new Tone.FMSynth().toDestination();
 
     // Loop the melody
-    Tone.Transport.scheduleRepeat((time) => {
-        // Get the next note and add it back to the end of the melody
-        let note = melody.shift();
-        melody.push(note);
-        fmSynth.triggerAttackRelease(note, duration, time);
-    }, duration);
-    
-    setVolume("PSE", fmSynth)
-    Tone.Transport.start();
-    return fmSynth;
+    let i = 0;
+    melodyInternal = setInterval(() => {
+        let note = melody[i];
+        fmInternal.triggerAttackRelease(note, Tone.Time(duration).toSeconds(), Tone.now());
+        i = (i + 1) % melody.length;
+    }, Tone.Time(duration).toSeconds() * 60 / bpm * 2000);
+
+    setVolume("PSE", fmInternal);
+    return fmInternal;
 }
 
 async function playSyria(element) {
     let newMelody = ['A4', 'C5', 'E5', 'C5', 'A4', 'B4', 'C5', 'B4'];
-    let newDuration = '4n';
+    let duration = '4n';
+    let bpm = 120;
+    fmSyria = new Tone.FMSynth().toDestination();
 
-    newFMSynth = new Tone.FMSynth().toDestination();
-    Tone.Transport.bpm.value = 150;
+    // Loop the melody
+    let i = 0;
+    melodySyria = setInterval(() => {
+        let note = newMelody[i];
+        fmSyria.triggerAttackRelease(note, Tone.Time(duration).toSeconds(), Tone.now());
+        i = (i + 1) % newMelody.length;
+    }, Tone.Time(duration).toSeconds() * 60 / bpm * 2000);
 
-    // Loop the new melody
-    Tone.Transport.scheduleRepeat((time) => {
-        // Get the next note and add it back to the end of the melody
-        let note = newMelody.shift();
-        newMelody.push(note);
-        newFMSynth.triggerAttackRelease(note, newDuration, time);
-    }, newDuration);
-    
-    setVolume("SYR", newFMSynth)
-    Tone.Transport.start();
-    return newFMSynth;
+    setVolume("SYR", fmSyria)
+    return fmSyria;
+}
+
+function playLebanon(element){
+    const footsteps = new Tone.Player("footstep.mp3").toDestination();
+    // play as soon as the buffer is loaded
+    footsteps.loop = true;
+    footsteps.autostart = true;
+    return footsteps;
+}
+
+function playJordan(element){
+    const oscillator = new Tone.Oscillator(440, "sawtooth").toDestination();
+    oscillator.start();
+    return oscillator;
 }
 
 function setVolume(country, synth) {
@@ -69,16 +80,4 @@ function setVolume(country, synth) {
     if (synth && synth.volume) {
         synth.volume.value = volume;
     }
-}
-
-function playLebanon(element){
-    const oscillator = new Tone.Oscillator(440, "triangle").toDestination();
-    oscillator.start();
-    return oscillator;
-}
-
-function playJordan(element){
-    const oscillator = new Tone.Oscillator(440, "sawtooth").toDestination();
-    oscillator.start();
-    return oscillator;
 }
