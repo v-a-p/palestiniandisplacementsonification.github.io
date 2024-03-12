@@ -3,12 +3,11 @@ async function playSound(element, isClicked, country) {
     if (isClicked) {
         if (country == 'PSE') { element.fmInternal = await playInternal(element); }
         else if (country == 'SYR'){ element.fmSyria = await playSyria(element); }
-        else if (country == 'LBN'){ element.footsteps = playLebanon(element); }
-        else { element.oscillator = playJordan(element); }
+        else if (country == 'LBN'){ element.fmLebanon = await playLebanon(element); }
+        else { element.fmJordan = await playJordan(element); }
     } 
     else {
-        // Stop the oscillator if the element is not clicked
-        if (element.oscillator) element.oscillator.stop();
+        // Stop the Audio if the element is unclicked
         if (element.fmInternal) {
             fmInternal.dispose();
             clearInterval(melodyInternal);
@@ -17,7 +16,8 @@ async function playSound(element, isClicked, country) {
             fmSyria.dispose();
             clearInterval(melodySyria);
         }
-        if (element.footsteps) element.footsteps.stop();
+        if (element.fmLebanon) element.fmLebanon.stop();
+        if (element.fmJordan) element.fmJordan.stop();
     }
 }
 
@@ -30,8 +30,7 @@ async function playInternal(element) {
     // Loop the melody
     let i = 0;
     melodyInternal = setInterval(() => {
-        let note = melody[i];
-        fmInternal.triggerAttackRelease(note, Tone.Time(duration).toSeconds(), Tone.now());
+        fmInternal.triggerAttackRelease(melody[i], Tone.Time(duration).toSeconds(), Tone.now());
         i = (i + 1) % melody.length;
     }, Tone.Time(duration).toSeconds() * 60 / bpm * 2000);
 
@@ -58,25 +57,51 @@ async function playSyria(element) {
 }
 
 function playLebanon(element){
-    const footsteps = new Tone.Player("footstep.mp3").toDestination();
+    fmLebanon = new Tone.Player({
+        url : "soundeffects/footstep.mp3",
+        onload: () => console.log("footstep.mp3 loaded successfully!"),
+        onerror: (e) => console.log("Error loading footstep.mp3:", e)
+    }).toDestination();
+
     // play as soon as the buffer is loaded
-    footsteps.loop = true;
-    footsteps.autostart = true;
-    return footsteps;
+    fmLebanon.loop = true;
+    fmLebanon.autostart = true;
+    setVolume("LBN", fmLebanon);
+    console.log("LebanonPlayer started.");
+    return fmLebanon;
 }
 
-function playJordan(element){
-    const oscillator = new Tone.Oscillator(440, "sawtooth").toDestination();
-    oscillator.start();
-    return oscillator;
+function playJordan(element) {
+    fmJordan = new Tone.GrainPlayer({
+        url: "soundeffects/crowd.mp3",
+        loop: true,
+        grainSize: 0.2, // Adjust to taste, in seconds
+        overlap: 0.1, // Adjust for smoothness, in seconds
+        playbackRate: 1.5,
+        detune: -100,
+        loopStart: 7.0,
+        loopEnd: 8.0,
+        reverse: true, // Play audio backward
+        onload: () => console.log("crowd.mp3 loaded successfully!"),
+        onerror: (e) => console.log("Error loading crowd.mp3:", e)
+    }).toDestination();
+
+    // Ensure audio is loaded before starting playback
+    Tone.loaded().then(() => {
+        fmJordan.start();
+        console.log("GrainPlayer started.");
+    });
+
+    setVolume("JOR", fmJordan);
+
+    return fmJordan;
 }
 
 function setVolume(country, synth) {
-    // Assuming yearValue is a number between 1952 and 2022
-    // We convert it to a volume between -60 and 0 decibels
     const volumeRange = 60;
     const datarange = data[2022][country] - data[1952][country];
     const volume = -40 + volumeRange*((data["" + yearValue.textContent][country]- data[1952][country])/datarange);
+    console.log("track volume : " + volume);
     if (synth && synth.volume) {
         synth.volume.value = volume;
     }
