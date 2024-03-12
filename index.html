@@ -6,6 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
 <body>
+    <audio id="audioPlayer" src="footstep.mp3"></audio>
     <h1 id="title">Displacement Sonification </h1>
 
     <!-- Slider -->
@@ -14,19 +15,21 @@
     <span id="year-value">1952</span>
     <!-- The boxes -->
     <div class="container">
-        <div class="box" onclick="toggleBox(this)">
+        <div class="box" onclick="toggleBox(this, 'PSE')">
             <a href="#">Internal Displacement</a>
         </div>
-        <div class="box" onclick="toggleBox(this)">
+        <div class="box" onclick="toggleBox(this, 'SYR')">
             <a href="#">Displacement to Syria</a>
         </div>
-        <div class="box" onclick="toggleBox(this)">
+        <div class="box" onclick="toggleBox(this, 'LBN')">
             <a href="#">Displacement to Lebanon</a>
         </div>
-        <div class="box" onclick="toggleBox(this)">
+        <div class="box" onclick="toggleBox(this, 'JOR')">
             <a href="#">Displacement to Jordan</a>
         </div>
     </div>
+    
+    <!-- The map -->
     <div class="svg-container">
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg xmlns="http://www.w3.org/2000/svg" width="697.90656" height="508.31549" version="1.1">
@@ -47,9 +50,9 @@
 
     </div>
     
-
     <!-- Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.core.min.js"></script>
-    <script src="script.js"></script>
+    <script src="main_script.js"></script>
+    <script src="play_sound.js"></script>
 </body>
 </html>
