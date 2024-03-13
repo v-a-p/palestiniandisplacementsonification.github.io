@@ -81,8 +81,8 @@
     async function playJordan(element) {
         fmJordan = new Tone.Player({
             url : "soundeffects/Jagged_zany_C3.wav",
-            onload: () => console.log("soundeffects/Jagged_zany_c3.wav loaded successfully!"),
-            onerror: (e) => console.log("Error loading soundeffects/Jagged_zany_c3.wav:", e)
+            onload: () => console.log("soundeffects/Jagged_zany_C3.wav loaded successfully!"),
+            onerror: (e) => console.log("Error loading soundeffects/Jagged_zany_C3.wav:", e)
         }).toDestination();
 
         // Set the playback rate to adjust pitch
