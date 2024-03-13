@@ -74,7 +74,7 @@ body {
 }
 .box {
     width: 200px;
-    height: 100px;
+    height: 60px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -83,7 +83,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    line-height: 100px;
+    line-height: 30px;
     cursor: pointer; /* Change cursor to pointer on hover */
     transition: background-color 0.3s ease;
     transition: transform 0.2s ease-in-out;
@@ -102,10 +102,46 @@ body {
     transform: scale(1.15);
 }
 
+/* ------------------- Panning ----------------- */
+/* 
+.container2 {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+.box2 {
+    width: 200px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: inline-block;
+    margin-right: 30px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease-in-out;
+  }
+
+.box2.clicked {
+    background-color: #ce1818; 
+  }
+
+.box2 a {
+    text-decoration: none;
+    color: #333;
+  }
+
+.box2:hover {
+    transform: scale(1.15);
+} */
+
 /* ------------------- Svg ----------------- */
 
 .svg-container {
-
     display: flex;
     align-items: center;
     justify-content: center;
