@@ -12,6 +12,11 @@ var yearValue = document.getElementById('year-value');
 slider.oninput = function() {
     yearValue.textContent = this.value; // Update the year value
     fillSlider(this.value); // Fill the slider with color
+    if (this.value === '1967') {
+        textAboveSlider.style.display = 'block';
+    } else {
+        textAboveSlider.style.display = 'none';
+    }
 }
 
 // Fill the slider with color
