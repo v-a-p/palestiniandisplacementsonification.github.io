@@ -64,4 +64,11 @@ function fillSlider(value) {
 function toggleBox(element, num) {
     const isClicked = element.classList.toggle('clicked');
     playSound(element, isClicked, num);
+
+    const country = document.getElementById(num);
+    // Check if the country element exists
+    if (country) {
+        // Toggle the fill color of the country
+        country.style.fill = isClicked ? '#ce1818' : '#00394f';
+    }
 }
