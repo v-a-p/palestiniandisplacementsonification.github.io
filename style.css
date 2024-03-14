@@ -138,7 +138,9 @@ body {
 .box2:hover {
     transform: scale(1.15);
 } */
-
+.hidden {
+    display: none;
+}
 /* ------------------- Svg ----------------- */
 
 .svg-container {
