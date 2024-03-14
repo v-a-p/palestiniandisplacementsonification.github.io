@@ -23,17 +23,17 @@ slider.oninput = function() {
     } else {
         textAboveSlider.style.display = 'none';
     }
-    if (this.value === '1987' || '1988' || '1989' || '1990' || '1991' || '1992' || '1993') {
+    if (this.value === '1987') {
         textAboveSlider2.style.display = 'block';
     } else {
         textAboveSlider2.style.display = 'none';
     }
-    if (this.value === '2000' || '2001' || '2002 || '2003' || '2004' || '2005') {
+    if (this.value === '2000') {
         textAboveSlider6.style.display = 'block';
     } else {
         textAboveSlider6.style.display = 'none';
     }
-    if (this.value === '2008' || '2009') {
+    if (this.value === '2008') {
         textAboveSlider4.style.display = 'block';
     } else {
         textAboveSlider4.style.display = 'none';
