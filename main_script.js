@@ -8,6 +8,11 @@ let melodyInternal, melodySyria;
 var slider = document.getElementById('slider');
 var yearValue = document.getElementById('year-value');
 var textAboveSlider = document.getElementById('text-above-slider');
+var textAboveSlider2 = document.getElementById('text-above-slider2');
+var textAboveSlider3 = document.getElementById('text-above-slider3');
+var textAboveSlider4 = document.getElementById('text-above-slider4');
+var textAboveSlider5 = document.getElementById('text-above-slider5');
+var textAboveSlider6 = document.getElementById('text-above-slider6');
 
 // Handle slider events
 slider.oninput = function() {
@@ -17,6 +22,31 @@ slider.oninput = function() {
         textAboveSlider.style.display = 'block';
     } else {
         textAboveSlider.style.display = 'none';
+    }
+    if (this.value === '1987' || '1988' || '1989' || '1990' || '1991' || '1992' || '1993') {
+        textAboveSlider2.style.display = 'block';
+    } else {
+        textAboveSlider2.style.display = 'none';
+    }
+    if (this.value === '2000' || '2001' || '2002 || '2003' || '2004' || '2005') {
+        textAboveSlider6.style.display = 'block';
+    } else {
+        textAboveSlider6.style.display = 'none';
+    }
+    if (this.value === '2008' || '2009') {
+        textAboveSlider4.style.display = 'block';
+    } else {
+        textAboveSlider4.style.display = 'none';
+    }
+    if (this.value === '2014') {
+        textAboveSlider5.style.display = 'block';
+    } else {
+        textAboveSlider5.style.display = 'none';
+    }
+    if (this.value === '2021') {
+        textAboveSlider3.style.display = 'block';
+    } else {
+        textAboveSlider3.style.display = 'none';
     }
 }
 
