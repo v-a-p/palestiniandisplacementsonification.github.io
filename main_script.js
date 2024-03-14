@@ -7,6 +7,7 @@ let melodyInternal, melodySyria;
 // Initialize the slider
 var slider = document.getElementById('slider');
 var yearValue = document.getElementById('year-value');
+var textAboveSlider = document.getElementById('text-above-slider');
 
 // Handle slider events
 slider.oninput = function() {
